@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventHub - Discover Amazing Events</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="#" onclick="showPage('home')">
+          <i class="fas fa-calendar-alt me-2"></i>EventHub
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="showPage('home')">Home</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="./events.html"
+                onclick="showPage('events')"
+                >Events</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="home-page" class="page-container active">
+      <div class="hero-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div class="text-center mb-4">
+                <h1 class="display-4 fw-bold mb-3">Discover Amazing Events</h1>
+                <p class="lead text-muted">
+                  Find and attend the best events in your area
+                </p>
+              </div>
+              <div class="search-card">
+                <form id="search-form" onsubmit="searchEvents(event)">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="search-query" class="form-label"
+                        >Search Events</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="search-query"
+                        placeholder="Event name, keyword..."
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="date-filter" class="form-label">Date</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="date-filter"
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="category-filter" class="form-label"
+                        >Category</label
+                      >
+                      <select class="form-select" id="category-filter">
+                        <option value="">All Categories</option>
+                        <option value="technology">Technology</option>
+                        <option value="business">Business</option>
+                        <option value="arts">Arts & Culture</option>
+                        <option value="sports">Sports</option>
+                        <option value="music">Music</option>
+                        <option value="food">Food & Drink</option>
+                        <option value="education">Education</option>
+                        <option value="health">Health & Wellness</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <div
+                        class="d-grid gap-2 d-md-flex justify-content-md-end"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          onclick="clearFilters()"
+                        >
+                          Clear
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fas fa-search me-2"></i>Search Events
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="mb-4">Featured Events</h2>
+            <div id="featured-events" class="row g-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="events-page"></div>
+
+    <div id="event-detail"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
