@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Locator - Event Details</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav aria-label="breadcrumb" class="bg-light py-3">
+      <div class="container">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="index.html" class="text-decoration-none">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="events.html" class="text-decoration-none">Events</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Event Details
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <div id="event-details-page" class="page-container">
+      <div class="event-detail-hero">
+        <div class="container">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="#" onclick="showPage('home')">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="#" onclick="showPage('events')">Events</a>
+              </li>
+              <li class="breadcrumb-item active">Event Details</li>
+            </ol>
+          </nav>
+          <div id="event-hero-content"></div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="detail-card">
+              <h3 class="mb-3">About This Event</h3>
+              <div id="event-description"></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="detail-card">
+              <h4 class="mb-3">Event Information</h4>
+              <div id="event-info"></div>
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-primary btn-lg">
+                  <i class="fas fa-ticket-alt me-2"></i>Get Tickets
+                </button>
+                <button class="btn btn-outline-secondary">
+                  <i class="fas fa-heart me-2"></i>Save Event
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
