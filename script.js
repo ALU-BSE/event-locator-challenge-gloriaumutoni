@@ -8,7 +8,7 @@ const events = [
     location: "Silicon Valley Convention Center",
     address: "123 Tech Street, San Francisco, CA",
     price: "$299",
-    image: "fas fa-laptop-code",
+    image: "./images/tech.jpeg",
     description:
       "Join industry leaders and innovators for a full day of insights into the latest technology trends. This summit features keynote speeches from top tech executives, hands-on workshops, and networking opportunities with fellow professionals. Learn about AI, blockchain, cloud computing, and emerging technologies that will shape the future.",
     organizer: "Tech Events Inc.",
@@ -24,7 +24,7 @@ const events = [
     location: "Downtown Art Gallery",
     address: "456 Art Avenue, New York, NY",
     price: "Free",
-    image: "fas fa-palette",
+    image: "./images/modern_art.jpeg",
     description:
       "Experience the work of contemporary artists from around the world in this stunning exhibition. The opening night features wine tasting, artist meet-and-greets, and guided tours of the collection. This exhibition showcases diverse artistic expressions and innovative techniques that challenge traditional boundaries.",
     organizer: "Metropolitan Arts Foundation",
@@ -35,12 +35,11 @@ const events = [
     id: 3,
     title: "Business Leadership Conference",
     category: "business",
-    date: "2025-09-10",
     time: "08:30 AM",
     location: "Grand Business Hotel",
     address: "789 Corporate Blvd, Chicago, IL",
     price: "$450",
-    image: "fas fa-chart-line",
+    image: "./images/conference.jpeg",
     description:
       "Develop your leadership skills with expert speakers, interactive workshops, and peer networking. This conference covers strategic planning, team management, digital transformation, and sustainable business practices. Perfect for executives, managers, and aspiring leaders looking to advance their careers.",
     organizer: "Business Leaders Network",
@@ -56,7 +55,7 @@ const events = [
     location: "Riverside Park Amphitheater",
     address: "321 River Road, Austin, TX",
     price: "$75",
-    image: "fas fa-music",
+    image: "./images/jazz.jpeg",
     description:
       "Enjoy an evening of smooth jazz under the open sky with renowned musicians and local artists. This outdoor festival features multiple stages, food vendors, and a relaxed atmosphere perfect for music lovers. Bring your blanket and enjoy world-class jazz performances in a beautiful natural setting.",
     organizer: "Austin Music Society",
@@ -72,7 +71,7 @@ const events = [
     location: "City Sports Complex",
     address: "654 Athletic Way, Denver, CO",
     price: "$35",
-    image: "fas fa-running",
+    image: "./images/marathon.jpeg",
     description:
       "Learn proper training techniques, nutrition strategies, and injury prevention methods from professional coaches. This workshop is designed for runners of all levels who want to improve their performance and safely complete their first marathon or achieve a personal best.",
     organizer: "Denver Running Club",
@@ -88,7 +87,7 @@ const events = [
     location: "Culinary Institute",
     address: "987 Flavor Street, Napa, CA",
     price: "$125",
-    image: "fas fa-wine-glass",
+    image: "./images/wine_tasting.jpeg",
     description:
       "Indulge in an evening of exquisite cuisine paired with premium wines from local vineyards. Professional sommeliers will guide you through tastings while renowned chefs present their signature dishes. Learn about wine pairing, flavor profiles, and culinary techniques in an elegant setting.",
     organizer: "Napa Valley Culinary Society",
@@ -104,7 +103,7 @@ const events = [
     location: "Learning Center Downtown",
     address: "234 Knowledge Ave, Seattle, WA",
     price: "$199",
-    image: "fas fa-laptop",
+    image: "./images/marketting.jpeg",
     description:
       "Master the latest digital marketing strategies including social media advertising, content marketing, SEO, and analytics. This intensive workshop provides hands-on training with real-world case studies and practical exercises. Perfect for marketers, entrepreneurs, and business owners.",
     organizer: "Digital Learning Institute",
@@ -120,7 +119,7 @@ const events = [
     location: "Serenity Wellness Center",
     address: "567 Peaceful Path, Sedona, AZ",
     price: "$180",
-    image: "fas fa-lotus",
+    image: "./images/wellness_retreat.jpeg",
     description:
       "Reconnect with yourself through guided meditation, yoga sessions, and wellness workshops. This day-long retreat offers a peaceful escape from daily stress with professional instructors teaching mindfulness techniques, breathing exercises, and stress management strategies.",
     organizer: "Harmony Wellness Group",
@@ -169,7 +168,7 @@ function createEventCard(event) {
         event.id
       }'">
           <div class="event-image">
-              <i class="${event.image}"></i>
+          <img src="${event.image}"/>
           </div>
           <div class="event-body">
               <span class="event-category">${
