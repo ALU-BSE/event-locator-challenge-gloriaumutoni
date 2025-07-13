@@ -8,7 +8,7 @@ const events = [
     location: "Silicon Valley Convention Center",
     address: "123 Tech Street, San Francisco, CA",
     price: "$299",
-    image: "./images/tech.jpeg",
+    image: "fas fa-laptop-code",
     description:
       "Join industry leaders and innovators for a full day of insights into the latest technology trends. This summit features keynote speeches from top tech executives, hands-on workshops, and networking opportunities with fellow professionals. Learn about AI, blockchain, cloud computing, and emerging technologies that will shape the future.",
     organizer: "Tech Events Inc.",
@@ -24,7 +24,7 @@ const events = [
     location: "Downtown Art Gallery",
     address: "456 Art Avenue, New York, NY",
     price: "Free",
-    image: "./images/modern_art.jpeg",
+    image: "fas fa-palette",
     description:
       "Experience the work of contemporary artists from around the world in this stunning exhibition. The opening night features wine tasting, artist meet-and-greets, and guided tours of the collection. This exhibition showcases diverse artistic expressions and innovative techniques that challenge traditional boundaries.",
     organizer: "Metropolitan Arts Foundation",
@@ -40,7 +40,7 @@ const events = [
     location: "Grand Business Hotel",
     address: "789 Corporate Blvd, Chicago, IL",
     price: "$450",
-    image: "./images/jazz_festival.jpeg",
+    image: "fas fa-chart-line",
     description:
       "Develop your leadership skills with expert speakers, interactive workshops, and peer networking. This conference covers strategic planning, team management, digital transformation, and sustainable business practices. Perfect for executives, managers, and aspiring leaders looking to advance their careers.",
     organizer: "Business Leaders Network",
@@ -56,7 +56,7 @@ const events = [
     location: "Riverside Park Amphitheater",
     address: "321 River Road, Austin, TX",
     price: "$75",
-    image: "./images/jazz_festival.jpeg",
+    image: "fas fa-music",
     description:
       "Enjoy an evening of smooth jazz under the open sky with renowned musicians and local artists. This outdoor festival features multiple stages, food vendors, and a relaxed atmosphere perfect for music lovers. Bring your blanket and enjoy world-class jazz performances in a beautiful natural setting.",
     organizer: "Austin Music Society",
@@ -72,7 +72,7 @@ const events = [
     location: "City Sports Complex",
     address: "654 Athletic Way, Denver, CO",
     price: "$35",
-    image: "./images/wellness_retreat.jpeg",
+    image: "fas fa-running",
     description:
       "Learn proper training techniques, nutrition strategies, and injury prevention methods from professional coaches. This workshop is designed for runners of all levels who want to improve their performance and safely complete their first marathon or achieve a personal best.",
     organizer: "Denver Running Club",
@@ -88,7 +88,7 @@ const events = [
     location: "Culinary Institute",
     address: "987 Flavor Street, Napa, CA",
     price: "$125",
-    image: "./images/wine_tasting.jpeg",
+    image: "fas fa-wine-glass",
     description:
       "Indulge in an evening of exquisite cuisine paired with premium wines from local vineyards. Professional sommeliers will guide you through tastings while renowned chefs present their signature dishes. Learn about wine pairing, flavor profiles, and culinary techniques in an elegant setting.",
     organizer: "Napa Valley Culinary Society",
@@ -104,7 +104,7 @@ const events = [
     location: "Learning Center Downtown",
     address: "234 Knowledge Ave, Seattle, WA",
     price: "$199",
-    image: "./images/tech.jpeg",
+    image: "fas fa-laptop",
     description:
       "Master the latest digital marketing strategies including social media advertising, content marketing, SEO, and analytics. This intensive workshop provides hands-on training with real-world case studies and practical exercises. Perfect for marketers, entrepreneurs, and business owners.",
     organizer: "Digital Learning Institute",
@@ -120,7 +120,7 @@ const events = [
     location: "Serenity Wellness Center",
     address: "567 Peaceful Path, Sedona, AZ",
     price: "$180",
-    image: "./images/wellness_retreat.jpeg",
+    image: "fas fa-lotus",
     description:
       "Reconnect with yourself through guided meditation, yoga sessions, and wellness workshops. This day-long retreat offers a peaceful escape from daily stress with professional instructors teaching mindfulness techniques, breathing exercises, and stress management strategies.",
     organizer: "Harmony Wellness Group",
@@ -133,35 +133,23 @@ let filteredEvents = events;
 let currentEvent = null;
 
 document.addEventListener("DOMContentLoaded", function () {
-  loadFeaturedEvents();
-  setMinDate();
+  if (document.getElementById("home-page")) {
+    loadFeaturedEvents();
+    setMinDate();
+  } else if (document.getElementById("events-page")) {
+    loadEvents();
+  } else if (document.getElementById("event-details-page")) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = parseInt(urlParams.get("id"));
+    if (eventId) {
+      showEventDetails(eventId);
+    }
+  }
 });
 
 function setMinDate() {
   const today = new Date().toISOString().split("T")[0];
   document.getElementById("date-filter").setAttribute("min", today);
-}
-
-function showPage(pageName) {
-  document.querySelectorAll(".page-container").forEach((page) => {
-    page.classList.remove("active");
-  });
-
-  document.getElementById(pageName + "-page").classList.add("active");
-
-  if (pageName === "events") {
-    loadEvents();
-  }
-}
-
-function loadFeaturedEvents() {
-  const featuredEvents = events.filter((event) => event.featured);
-  const container = document.getElementById("featured-events");
-  container.innerHTML = "";
-
-  featuredEvents.forEach((event) => {
-    container.appendChild(createEventCard(event));
-  });
 }
 
 function createEventCard(event) {
@@ -177,7 +165,9 @@ function createEventCard(event) {
   });
 
   col.innerHTML = `
-      <div class="event-card" onclick="showEventDetails(${event.id})">
+      <div class="event-card" onclick="window.location.href='event-details.html?id=${
+        event.id
+      }'">
           <div class="event-image">
               <i class="${event.image}"></i>
           </div>
@@ -214,6 +204,17 @@ function createEventCard(event) {
   return col;
 }
 
+function loadFeaturedEvents() {
+  const featuredEvents = events.filter((event) => event.featured);
+  const container = document.getElementById("featured-events");
+  if (container) {
+    container.innerHTML = "";
+    featuredEvents.forEach((event) => {
+      container.appendChild(createEventCard(event));
+    });
+  }
+}
+
 function searchEvents(event) {
   event.preventDefault();
 
@@ -235,56 +236,40 @@ function searchEvents(event) {
     return matchesQuery && matchesDate && matchesCategory;
   });
 
-  showPage("events");
+  sessionStorage.setItem("filteredEvents", JSON.stringify(filteredEvents));
+  window.location.href = "events.html";
 }
 
 function loadEvents() {
   const container = document.getElementById("events-results");
   const noEventsDiv = document.getElementById("no-events");
 
-  container.innerHTML = "";
-
-  if (filteredEvents.length === 0) {
-    noEventsDiv.style.display = "block";
-    return;
+  if (sessionStorage.getItem("filteredEvents")) {
+    filteredEvents = JSON.parse(sessionStorage.getItem("filteredEvents"));
   }
 
-  noEventsDiv.style.display = "none";
+  if (container) {
+    container.innerHTML = "";
 
-  filteredEvents.forEach((event) => {
-    container.appendChild(createEventCard(event));
-  });
+    if (filteredEvents.length === 0) {
+      noEventsDiv.style.display = "block";
+      return;
+    }
+
+    noEventsDiv.style.display = "none";
+
+    filteredEvents.forEach((event) => {
+      container.appendChild(createEventCard(event));
+    });
+  }
 }
 
 function showEventDetails(eventId) {
   currentEvent = events.find((event) => event.id === eventId);
   if (!currentEvent) return;
 
-  fetch("./event-details.html")
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to load event details page");
-      return res.text();
-    })
-    .then((html) => {
-      const container = document.getElementById("event-detail");
-      container.innerHTML = html;
-
-      const interval = setInterval(() => {
-        const descriptionEl = document.getElementById("event-description");
-        const infoEl = document.getElementById("event-info");
-        const heroEl = document.getElementById("event-hero-content");
-
-        if (descriptionEl && infoEl && heroEl) {
-          clearInterval(interval);
-          loadEventDetails();
-          showPage("event-detail");
-        }
-      }, 50);
-    })
-    .catch((err) => console.error("Error loading event details layout:", err));
+  loadEventDetails();
 }
-
-window.showEventDetails = showEventDetails;
 
 function loadEventDetails() {
   if (!currentEvent) return;
@@ -297,92 +282,101 @@ function loadEventDetails() {
     day: "numeric",
   });
 
-  // Hero content
-  document.getElementById("event-hero-content").innerHTML = `
-      <div class="row">
-          <div class="col-lg-8">
-              <span class="badge bg-light text-dark mb-3">${
-                currentEvent.category.charAt(0).toUpperCase() +
-                currentEvent.category.slice(1)
-              }</span>
-              <h1 class="display-5 fw-bold mb-3">${currentEvent.title}</h1>
-              <p class="lead mb-4">${currentEvent.description.substring(
-                0,
-                150
-              )}...</p>
-              <div class="d-flex flex-wrap gap-4">
-                  <div>
-                      <i class="fas fa-calendar-alt me-2"></i>
-                      <span>${formattedDate}</span>
-                  </div>
-                  <div>
-                      <i class="fas fa-clock me-2"></i>
-                      <span>${currentEvent.time}</span>
-                  </div>
-                  <div>
-                      <i class="fas fa-map-marker-alt me-2"></i>
-                      <span>${currentEvent.location}</span>
+  const heroContent = document.getElementById("event-hero-content");
+  if (heroContent) {
+    heroContent.innerHTML = `
+          <div class="row">
+              <div class="col-lg-8">
+                  <span class="badge bg-light text-dark mb-3">${
+                    currentEvent.category.charAt(0).toUpperCase() +
+                    currentEvent.category.slice(1)
+                  }</span>
+                  <h1 class="display-5 fw-bold mb-3">${currentEvent.title}</h1>
+                  <p class="lead mb-4">${currentEvent.description.substring(
+                    0,
+                    150
+                  )}...</p>
+                  <div class="d-flex flex-wrap gap-4">
+                      <div>
+                          <i class="fas fa-calendar-alt me-2"></i>
+                          <span>${formattedDate}</span>
+                      </div>
+                      <div>
+                          <i class="fas fa-clock me-2"></i>
+                          <span>${currentEvent.time}</span>
+                      </div>
+                      <div>
+                          <i class="fas fa-map-marker-alt me-2"></i>
+                          <span>${currentEvent.location}</span>
+                      </div>
                   </div>
               </div>
+              <div class="col-lg-4 text-lg-end">
+                  <div class="fs-2 fw-bold">${currentEvent.price}</div>
+                  <div class="text-light opacity-75">${
+                    currentEvent.capacity
+                  }</div>
+              </div>
           </div>
-          <div class="col-lg-4 text-lg-end">
-              <div class="fs-2 fw-bold">${currentEvent.price}</div>
-              <div class="text-light opacity-75">${currentEvent.capacity}</div>
-          </div>
-      </div>
-  `;
+      `;
+  }
 
-  // Event description
-  document.getElementById("event-description").innerHTML = `
-      <p>${currentEvent.description}</p>
-      <h5 class="mt-4">What to Expect</h5>
-      <ul class="list-unstyled">
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Expert speakers and industry professionals</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Networking opportunities with like-minded individuals</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Refreshments and materials provided</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Certificate of attendance</li>
-      </ul>
-  `;
+  const eventDescription = document.getElementById("event-description");
+  if (eventDescription) {
+    eventDescription.innerHTML = `
+          <p>${currentEvent.description}</p>
+          <h5 class="mt-4">What to Expect</h5>
+          <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Expert speakers and industry professionals</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Networking opportunities with like-minded individuals</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Refreshments and materials provided</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Certificate of attendance</li>
+          </ul>
+      `;
+  }
 
-  document.getElementById("event-info").innerHTML = `
-      <div class="info-item">
-          <i class="fas fa-calendar-alt info-icon"></i>
-          <div>
-              <strong>Date & Time</strong><br>
-              ${formattedDate}<br>
-              ${currentEvent.time}
+  const eventInfo = document.getElementById("event-info");
+  if (eventInfo) {
+    eventInfo.innerHTML = `
+          <div class="info-item">
+              <i class="fas fa-calendar-alt info-icon"></i>
+              <div>
+                  <strong>Date & Time</strong><br>
+                  ${formattedDate}<br>
+                  ${currentEvent.time}
+              </div>
           </div>
-      </div>
-      <div class="info-item">
-          <i class="fas fa-map-marker-alt info-icon"></i>
-          <div>
-              <strong>Location</strong><br>
-              ${currentEvent.location}<br>
-              ${currentEvent.address}
+          <div class="info-item">
+              <i class="fas fa-map-marker-alt info-icon"></i>
+              <div>
+                  <strong>Location</strong><br>
+                  ${currentEvent.location}<br>
+                  ${currentEvent.address}
+              </div>
           </div>
-      </div>
-      <div class="info-item">
-          <i class="fas fa-user info-icon"></i>
-          <div>
-              <strong>Organizer</strong><br>
-              ${currentEvent.organizer}
+          <div class="info-item">
+              <i class="fas fa-user info-icon"></i>
+              <div>
+                  <strong>Organizer</strong><br>
+                  ${currentEvent.organizer}
+              </div>
           </div>
-      </div>
-      <div class="info-item">
-          <i class="fas fa-users info-icon"></i>
-          <div>
-              <strong>Capacity</strong><br>
-              ${currentEvent.capacity}
+          <div class="info-item">
+              <i class="fas fa-users info-icon"></i>
+              <div>
+                  <strong>Capacity</strong><br>
+                  ${currentEvent.capacity}
+              </div>
           </div>
-      </div>
-      <div class="info-item">
-          <i class="fas fa-tag info-icon"></i>
-          <div>
-              <strong>Price</strong><br>
-              ${currentEvent.price}
+          <div class="info-item">
+              <i class="fas fa-tag info-icon"></i>
+              <div>
+                  <strong>Price</strong><br>
+                  ${currentEvent.price}
+              </div>
           </div>
-      </div>
-  `;
+      `;
+  }
 }
 
 function clearFilters() {
@@ -390,4 +384,5 @@ function clearFilters() {
   document.getElementById("date-filter").value = "";
   document.getElementById("category-filter").value = "";
   filteredEvents = events;
+  sessionStorage.setItem("filteredEvents", JSON.stringify(filteredEvents));
 }

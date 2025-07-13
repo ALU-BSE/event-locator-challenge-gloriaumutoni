@@ -3,45 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Event Locator - Event Details</title>
+    <title>EventHub - Event Details</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
-    <link href="styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <nav aria-label="breadcrumb" class="bg-light py-3">
+    <nav class="navbar navbar-expand-lg">
       <div class="container">
-        <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item">
-            <a href="index.html" class="text-decoration-none">Home</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="events.html" class="text-decoration-none">Events</a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Event Details
-          </li>
-        </ol>
+        <a class="navbar-brand" href="index.html">
+          <i class="fas fa-calendar-alt me-2"></i>EventHub
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="events.html">Events</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
 
-    <div id="event-details-page" class="page-container">
+    <div id="event-details-page" class="page-container active">
       <div class="event-detail-hero">
         <div class="container">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="#" onclick="showPage('home')">Home</a>
-              </li>
-              <li class="breadcrumb-item">
-                <a href="#" onclick="showPage('events')">Events</a>
-              </li>
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="events.html">Events</a></li>
               <li class="breadcrumb-item active">Event Details</li>
             </ol>
           </nav>
